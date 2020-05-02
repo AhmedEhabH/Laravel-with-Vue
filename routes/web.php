@@ -20,3 +20,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// if write any path it will back to index
+Route::get('{path}', "HomeController@index")->where('path', '([A-z\d-\/_.]+)');
