@@ -10,8 +10,10 @@ window.Vue = require('vue');
 
 
 import Vue from 'vue';
+import moment from 'moment';
 import VueRouter from 'vue-router';
 import { Form, HasError, AlertError } from 'vform';
+
 
 // vue-router
 Vue.use(VueRouter);
@@ -31,7 +33,16 @@ const router = new VueRouter({
     routes // short for `routes: routes`
 });
 
+// Filter
+Vue.filter('upperFirstLetter', function(text){
+    if(!text) return;
+    text = text.toString();
+    return text.charAt(0).toUpperCase() + text.slice(1);
+});
 
+Vue.filter('myDate', function(date){
+    return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+})
 
 /**
  * The following block of code may be used to automatically register your
