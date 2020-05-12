@@ -12,6 +12,7 @@ window.Vue = require('vue');
 import Vue from 'vue';
 import moment from 'moment';
 import VueRouter from 'vue-router';
+import VueProgressBar from 'vue-progressbar'
 import { Form, HasError, AlertError } from 'vform';
 
 
@@ -43,6 +44,24 @@ Vue.filter('upperFirstLetter', function(text){
 Vue.filter('myDate', function(date){
     return moment(date).format('MMMM Do YYYY, h:mm:ss a');
 })
+
+// VueProgressBar
+const options = {
+    color: 'rgb(143, 255, 199)',
+    failedColor: 'red',
+    thickness: '10px',
+    transition: {
+      speed: '1s',
+      opacity: '0.6s',
+      termination: 700
+    },
+    autoRevert: true,
+    location: 'top',
+    inverse: false
+  }
+  
+  Vue.use(VueProgressBar, options);
+  
 
 /**
  * The following block of code may be used to automatically register your

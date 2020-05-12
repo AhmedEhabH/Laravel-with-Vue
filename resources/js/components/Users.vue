@@ -143,7 +143,14 @@
 
         methods:{
             createUser(){
-                this.form.post('api/user');
+                this.$Progress.start()
+                this.form.post('api/user').then(({data}) => (
+                    this.loadUser()
+                )).catch(({error}) => {
+                    console.log(error);
+                    this.$Progress.fail();
+                });
+                this.$Progress.finish();
             },
             loadUser(){
                 axios.get("api/user").then(({data}) => (this.users = data.data));
