@@ -142,15 +142,35 @@
         },
 
         methods:{
+            cleanForm(){
+                this.name="",
+                this.email="",
+                this.password="",
+                this.type="",
+                this.bio="",
+                this.photo=""
+            },
+
+            showToast(icon, title){
+                Toast.fire({
+                    icon: icon,
+                    title: title
+                });
+            },
+
             createUser(){
                 this.$Progress.start()
-                this.form.post('api/user').then(({data}) => (
+                this.form.post('api/user').then(({data}) => {
+                    this.showToast('success', 'Created user successfully');
                     this.loadUser()
-                )).catch(({error}) => {
-                    console.log(error);
+
+                }).catch(({error}) => {
+                    this.showToast('error', 'Failed to create user');
                     this.$Progress.fail();
                 });
+                $('#addNew').modal('hide');
                 this.$Progress.finish();
+                this.cleanForm();
             },
             loadUser(){
                 axios.get("api/user").then(({data}) => (this.users = data.data));

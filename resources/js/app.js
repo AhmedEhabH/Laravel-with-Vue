@@ -12,6 +12,8 @@ window.Vue = require('vue');
 import Vue from 'vue';
 import moment from 'moment';
 import VueRouter from 'vue-router';
+// ES6 Modules or TypeScript
+import Swal from 'sweetalert2'
 import VueProgressBar from 'vue-progressbar'
 import { Form, HasError, AlertError } from 'vform';
 
@@ -51,17 +53,33 @@ const options = {
     failedColor: 'red',
     thickness: '10px',
     transition: {
-      speed: '1s',
-      opacity: '0.6s',
-      termination: 700
+        speed: '1s',
+        opacity: '0.6s',
+        termination: 700
     },
     autoRevert: true,
     location: 'top',
     inverse: false
-  }
+}
   
-  Vue.use(VueProgressBar, options);
+Vue.use(VueProgressBar, options);
+
+// Sweet alert 2
+window.Swal = Swal;
+const Toast = Swal.mixin({
+    toast: true,
+    position: 'top-end',
+    showConfirmButton: false,
+    timer: 3000,
+    timerProgressBar: true,
+    onOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer)
+        toast.addEventListener('mouseleave', Swal.resumeTimer)
+    }
+})
   
+window.Toast = Toast;
+
 
 /**
  * The following block of code may be used to automatically register your
