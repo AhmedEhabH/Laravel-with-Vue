@@ -142,15 +142,6 @@
         },
 
         methods:{
-            cleanForm(){
-                this.name="",
-                this.email="",
-                this.password="",
-                this.type="",
-                this.bio="",
-                this.photo=""
-            },
-
             showToast(icon, title){
                 Toast.fire({
                     icon: icon,
@@ -170,7 +161,6 @@
                 });
                 $('#addNew').modal('hide');
                 this.$Progress.finish();
-                this.cleanForm();
             },
             loadUser(){
                 axios.get("api/user").then(({data}) => (this.users = data.data));

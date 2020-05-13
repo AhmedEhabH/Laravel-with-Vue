@@ -2163,9 +2163,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    cleanForm: function cleanForm() {
-      this.name = "", this.email = "", this.password = "", this.type = "", this.bio = "", this.photo = "";
-    },
     showToast: function showToast(icon, title) {
       Toast.fire({
         icon: icon,
@@ -2191,7 +2188,6 @@ __webpack_require__.r(__webpack_exports__);
       });
       $('#addNew').modal('hide');
       this.$Progress.finish();
-      this.cleanForm();
     },
     loadUser: function loadUser() {
       var _this2 = this;
