@@ -39,7 +39,7 @@
                       <i class="fa fa-edit blue"></i>
                     </a>
                     /
-                    <a href="#">
+                    <a href="#" @click="deleteUser(user.id)">
                       <i class="fa fa-trash red"></i>
                     </a>
                   </td>
@@ -182,20 +182,46 @@ export default {
       this.form
         .post("api/user")
         .then(({ data }) => {
-          Fire.$emit('AfterCreate');
+          Fire.$emit('loadUsers');
           this.showToast("success", "Created user successfully");
+          $("#addNew").modal("hide");
           // this.loadUsers();
         })
         .catch(({ error }) => {
           this.showToast("error", "Failed to create user");
           this.$Progress.fail();
         });
-      $("#addNew").modal("hide");
+      
       this.$Progress.finish();
     },
     loadUsers() {
       axios.get("api/user").then(({ data }) => (this.users = data.data));
-    }
+    },
+    deleteUser(id) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then((result) => {
+        if (result.value) {
+          this.form.delete('api/user/'+id).then(()=>{
+            Fire.$emit('loadUsers');
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+          })
+          .catch(()=>{
+            showToast('error', "Can't delete user");
+          })
+        }
+      })
+    },
   },
 
   mounted() {
@@ -205,7 +231,7 @@ export default {
   created() {
     this.loadUsers();
     // setInterval(this.loadUsers, 5000);
-    Fire.$on('AfterCreate', ()=>{
+    Fire.$on('loadUsers', ()=>{
       this.loadUsers();
     });
   }
