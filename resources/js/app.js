@@ -80,6 +80,8 @@ const Toast = Swal.mixin({
   
 window.Toast = Toast;
 
+// event Fire
+window.Fire = new Vue();
 
 /**
  * The following block of code may be used to automatically register your

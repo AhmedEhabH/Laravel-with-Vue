@@ -2204,10 +2204,10 @@ __webpack_require__.r(__webpack_exports__);
       this.$Progress.start();
       this.form.post("api/user").then(function (_ref) {
         var data = _ref.data;
+        Fire.$emit('AfterCreate');
 
-        _this.showToast("success", "Created user successfully");
+        _this.showToast("success", "Created user successfully"); // this.loadUsers();
 
-        _this.loadUsers();
       })["catch"](function (_ref2) {
         var error = _ref2.error;
 
@@ -2230,8 +2230,13 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {// console.log('Component mounted.')
   },
   created: function created() {
-    this.loadUsers();
-    setInterval(this.loadUsers, 5000);
+    var _this3 = this;
+
+    this.loadUsers(); // setInterval(this.loadUsers, 5000);
+
+    Fire.$on('AfterCreate', function () {
+      _this3.loadUsers();
+    });
   }
 });
 
@@ -78540,7 +78545,9 @@ var Toast = sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.mixin({
     toast.addEventListener('mouseleave', sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.resumeTimer);
   }
 });
-window.Toast = Toast;
+window.Toast = Toast; // event Fire
+
+window.Fire = new vue__WEBPACK_IMPORTED_MODULE_0___default.a();
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

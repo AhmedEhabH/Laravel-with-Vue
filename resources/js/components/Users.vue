@@ -182,8 +182,9 @@ export default {
       this.form
         .post("api/user")
         .then(({ data }) => {
+          Fire.$emit('AfterCreate');
           this.showToast("success", "Created user successfully");
-          this.loadUsers();
+          // this.loadUsers();
         })
         .catch(({ error }) => {
           this.showToast("error", "Failed to create user");
@@ -203,7 +204,10 @@ export default {
 
   created() {
     this.loadUsers();
-    setInterval(this.loadUsers, 5000);
+    // setInterval(this.loadUsers, 5000);
+    Fire.$on('AfterCreate', ()=>{
+      this.loadUsers();
+    });
   }
 };
 </script>
