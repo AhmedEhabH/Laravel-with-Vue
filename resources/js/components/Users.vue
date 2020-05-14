@@ -8,7 +8,7 @@
             <h3 class="card-title">Users Table</h3>
 
             <div class="card-tools">
-              <button class="btn btn-success" data-toggle="modal" data-target="#addNew">
+              <button class="btn btn-success" @click="newModal">
                 Add New User
                 <i class="fa fa-user-plus fa-fw"></i>
               </button>
@@ -35,7 +35,7 @@
                   <td>{{ user.type | upperFirstLetter }}</td>
                   <td>{{ user.created_at | myDate }}</td>
                   <td>
-                    <a href="#">
+                    <a href="#" @click="editModal(user)">
                       <i class="fa fa-edit blue"></i>
                     </a>
                     /
@@ -170,6 +170,17 @@ export default {
   },
 
   methods: {
+    newModal(){
+      this.form.reset();
+      $("#addNew").modal("show");
+    },
+
+    editModal(user){
+      this.form.reset();
+      $("#addNew").modal("show");
+      this.form.fill(user);
+    },
+
     showToast(icon, title) {
       Toast.fire({
         icon: icon,
