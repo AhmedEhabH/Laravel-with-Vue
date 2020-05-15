@@ -36,11 +36,10 @@
                   <td>{{ user.created_at | myDate }}</td>
                   <td>
                     <a href="#" @click="editModal(user)">
-                      <i class="fa fa-edit blue"></i>
+                      <i class="fa fa-edit btn btn-primary"></i>
                     </a>
-                    /
                     <a href="#" @click="deleteUser(user.id)">
-                      <i class="fa fa-trash red"></i>
+                      <i class="fa fa-trash btn btn-danger"></i>
                     </a>
                   </td>
                 </tr>
@@ -66,13 +65,14 @@
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="addNewLabel">Add New User</h5>
+            <h5 v-show="editMode" class="modal-title" id="addNewLabel">Update User's info</h5>
+            <h5 v-show="!editMode" class="modal-title" id="addNewLabel">Add New User</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
 
-          <form @submit.prevent="createUser">
+          <form @submit.prevent="editMode ? updateUser() : createUser()">
             <!-- /.Modal Body -->
             <div class="modal-body">
               <div class="form-group">
@@ -144,7 +144,8 @@
 
             <div class="modal-footer">
               <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Create</button>
+              <button v-show="editMode" type="submit" class="btn btn-success">Update</button>
+              <button v-show="!editMode" type="submit" class="btn btn-primary">Create</button>
             </div>
           </form>
         </div>
@@ -156,9 +157,12 @@
 <script>
 export default {
   data() {
+    
     return {
+      editMode: false,
       users: {},
       form: new Form({
+        id:"",
         name: "",
         email: "",
         password: "",
@@ -172,10 +176,13 @@ export default {
   methods: {
     newModal(){
       this.form.reset();
+      this.form.clear();
       $("#addNew").modal("show");
+      this.editMode = false;
     },
 
     editModal(user){
+      this.editMode = true;
       this.form.reset();
       $("#addNew").modal("show");
       this.form.fill(user);
@@ -194,17 +201,34 @@ export default {
         .post("api/user")
         .then(({ data }) => {
           Fire.$emit('loadUsers');
-          this.showToast("success", "Created user successfully");
+          this.showToast("success", "Updated user successfully");
           $("#addNew").modal("hide");
-          // this.loadUsers();
         })
         .catch(({ error }) => {
-          this.showToast("error", "Failed to create user");
+          this.showToast("error", "Failed to update user");
           this.$Progress.fail();
         });
       
       this.$Progress.finish();
     },
+
+    updateUser(id){
+      this.$Progress.start();
+      // console.log("Update...");
+      this.form
+      .put("api/user/"+this.form.id)
+      .then((data) => {
+        Fire.$emit('loadUsers');
+        this.showToast("success", "Created user successfully");
+        $("#addNew").modal("hide");
+      })
+      .catch((error) => {
+        this.showToast("error", "Failed to create user");
+        this.$Progress.fail();
+      });
+      this.$Progress.finish();
+    },
+
     loadUsers() {
       axios.get("api/user").then(({ data }) => (this.users = data.data));
     },
