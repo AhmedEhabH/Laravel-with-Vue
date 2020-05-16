@@ -219,11 +219,11 @@ export default {
       .put("api/user/"+this.form.id)
       .then((data) => {
         Fire.$emit('loadUsers');
-        this.showToast("success", "Created user successfully");
+        this.showToast("success", "Updated user successfully");
         $("#addNew").modal("hide");
       })
       .catch((error) => {
-        this.showToast("error", "Failed to create user");
+        this.showToast("error", "Failed to update user");
         this.$Progress.fail();
       });
       this.$Progress.finish();

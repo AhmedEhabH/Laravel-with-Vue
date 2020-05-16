@@ -9,6 +9,17 @@ use App\User;
 
 class UserController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('api');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -70,6 +81,12 @@ class UserController extends Controller
         //
         $user = User::findOrFail($id);
 
+        $this->validate($request, [
+            'name'      =>  'required|string|max:191',
+            'email'     =>  'required|string|email|max:191|unique:users,email,'.$user->id,
+            'password'  =>  'sometimes|min:6',
+        ]);
+
         $user->update($request->all());
 
         return [
@@ -87,12 +104,6 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
-        $this->validate($request, [
-            'name'      =>  'required|string|max:191',
-            'email'     =>  'required|string|email|max:191|unique:users,email,'.$user->id,
-            'password'  =>  'sometimes|min:6',
-        ]);
-
         $user = User::findOrFail($id);
 
         $user->delete();
