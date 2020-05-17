@@ -2165,15 +2165,27 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    getProfilePhoto: function getProfilePhoto() {
-      return this.form.photo.length > 200 ? this.form.photo : "img/profile/" + this.form.photo;
+    loadUserData: function loadUserData() {
+      var _this = this;
+
+      axios.get("api/profile").then(function (_ref) {
+        var data = _ref.data;
+        return _this.form.fill(data);
+      })["catch"](function (_ref2) {
+        var error = _ref2.error;
+        return console.log(error);
+      });
+    },
+    getProfilePhoto: function getProfilePhoto() {// return (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
     },
     updateInfo: function updateInfo() {},
     updateProfile: function updateProfile(e) {}
   },
   mounted: function mounted() {// console.log('Component mounted.')
   },
-  created: function created() {}
+  created: function created() {
+    this.loadUserData();
+  }
 });
 
 /***/ }),

@@ -147,8 +147,13 @@ export default {
     },
 
     methods:{
+        loadUserData() {
+            axios.get("api/profile")
+            .then(({ data }) => (this.form.fill(data)))
+            .catch(({ error }) => (console.log(error)));
+        },
         getProfilePhoto(){
-            return (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
+            // return (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
         },
         
         updateInfo(){
@@ -167,7 +172,7 @@ export default {
     },
 
     created(){
-
+        this.loadUserData();
     }
 };
 </script>
