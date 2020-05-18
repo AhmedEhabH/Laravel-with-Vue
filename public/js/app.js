@@ -2179,7 +2179,25 @@ __webpack_require__.r(__webpack_exports__);
     getProfilePhoto: function getProfilePhoto() {// return (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
     },
     updateInfo: function updateInfo() {},
-    updateProfile: function updateProfile(e) {}
+    updateProfilePhoto: function updateProfilePhoto(e) {
+      var _this2 = this;
+
+      // console.log("uploading");
+      // console.log(e);
+      var file = e.target.files[0];
+      var reader = new FileReader(); // console.log(file);
+
+      /* OPTIONAL */
+
+      reader.onloadend = function (file) {
+        // console.log("result", reader.result);
+        _this2.form.photo = reader.result;
+      };
+      /* ===================================== */
+
+
+      reader.readAsDataURL(file);
+    }
   },
   mounted: function mounted() {// console.log('Component mounted.')
   },
@@ -64997,7 +65015,7 @@ var render = function() {
                         _c("input", {
                           staticClass: "form-input",
                           attrs: { type: "file", name: "photo" },
-                          on: { change: _vm.updateProfile }
+                          on: { change: _vm.updateProfilePhoto }
                         })
                       ])
                     ]),

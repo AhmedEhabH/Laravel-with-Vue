@@ -90,7 +90,7 @@
                                 <div class="form-group">
                                     <label for="photo" class="col-sm-2 control-label">Profile Photo</label>
                                     <div class="col-sm-12">
-                                        <input type="file" @change="updateProfile" name="photo" class="form-input">
+                                        <input type="file" @change="updateProfilePhoto" name="photo" class="form-input">
                                     </div>
 
                                 </div>
@@ -160,8 +160,20 @@ export default {
 
         },
 
-        updateProfile(e){
-
+        updateProfilePhoto(e){
+            // console.log("uploading");
+            // console.log(e);
+            let file = e.target.files[0];
+            let reader = new FileReader();
+            // console.log(file);
+            
+            /* OPTIONAL */
+            reader.onloadend = (file) => {
+                // console.log("result", reader.result);
+                this.form.photo = reader.result;
+            }
+            /* ===================================== */
+            reader.readAsDataURL(file);
         },
 
         
