@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use Intervention\Image\Facades\Image;
 
 class UserController extends Controller
 {
@@ -126,10 +127,20 @@ class UserController extends Controller
     {
         //
         $user = auth('api')->user();
+
+        if($request->photo){
+            $type = explode('/', substr($request->photo, 0, strpos($request->photo, ';')))[1];
+            $name = date('Y-m-d-H-i-s', time()) . "-{$user->id}.{$type}";
+            Image::make($request->photo)->save(public_path('img/profile/').$name);
+            // $user->photo = public_path('img/profile/').$name;
+        }
         // $user->update($request->all());
         return [
-            'message'=>"SUCCESS",
-            'Picture'=>$request->photo,
+            'message'   =>"SUCCESS",
+            'Picture'   =>$request->photo,
+            "type"      =>explode('/', substr($request->photo, 0, strpos($request->photo, ';')))[1], 
+            "new-name"  =>$name,
+            "time"      =>date('Y-m-d-H-i-s', time()),
         ];
     }
 }
