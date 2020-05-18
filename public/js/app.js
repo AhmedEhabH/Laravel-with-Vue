@@ -2178,7 +2178,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     getProfilePhoto: function getProfilePhoto() {// return (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
     },
-    updateInfo: function updateInfo() {},
+    updateProfileInfo: function updateProfileInfo() {
+      this.form.put('api/profile').then(function () {})["catch"](function () {});
+    },
     updateProfilePhoto: function updateProfilePhoto(e) {
       var _this2 = this;
 
@@ -65085,7 +65087,7 @@ var render = function() {
                             on: {
                               click: function($event) {
                                 $event.preventDefault()
-                                return _vm.updateInfo($event)
+                                return _vm.updateProfileInfo($event)
                               }
                             }
                           },

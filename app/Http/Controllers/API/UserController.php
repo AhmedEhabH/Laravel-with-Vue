@@ -70,16 +70,6 @@ class UserController extends Controller
     }
 
     /**
-     * Display the authenticated user.
-     *
-     */
-    public function profile()
-    {
-        //
-        return auth('api')->user();
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -120,6 +110,26 @@ class UserController extends Controller
         
         return [
             'message' => "User Deleted"
+        ];
+    }
+
+    /**
+     * Profile methods
+     */
+
+    public function profile()
+    {
+        //
+        return auth('api')->user();
+    }
+    public function updateProfile(Request $request)
+    {
+        //
+        $user = auth('api')->user();
+        // $user->update($request->all());
+        return [
+            'message'=>"SUCCESS",
+            'Picture'=>$request->photo,
         ];
     }
 }

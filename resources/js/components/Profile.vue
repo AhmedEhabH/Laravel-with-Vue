@@ -112,7 +112,7 @@
 
                                 <div class="form-group">
                                     <div class="col-sm-offset-2 col-sm-12">
-                                    <button @click.prevent="updateInfo" type="submit" class="btn btn-success">Update</button>
+                                    <button @click.prevent="updateProfileInfo" type="submit" class="btn btn-success">Update</button>
                                     </div>
                                 </div>
                                 </form>
@@ -156,8 +156,14 @@ export default {
             // return (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
         },
         
-        updateInfo(){
+        updateProfileInfo(){
+            this.form.put('api/profile')
+            .then(()=>{
 
+            })
+            .catch(()=>{
+
+            })
         },
 
         updateProfilePhoto(e){
