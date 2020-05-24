@@ -154,32 +154,49 @@ export default {
         },
         getProfilePhoto(){
             // return (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
+            return "img/profile/"+ this.form.photo;
         },
         
         updateProfileInfo(){
+            this.$Progress.start();
             this.form.put('api/profile')
             .then(()=>{
 
             })
             .catch(()=>{
-
+                this.$Progress.fail();
             })
+            this.$Progress.finish();
+        },
+
+        convetBytesToKb(size){
+            return size / 1024;
         },
 
         updateProfilePhoto(e){
             // console.log("uploading");
             // console.log(e);
+
             let file = e.target.files[0];
             let reader = new FileReader();
             // console.log(file);
             
-            /* OPTIONAL */
-            reader.onloadend = (file) => {
-                // console.log("result", reader.result);
-                this.form.photo = reader.result;
+            
+            if(this.convetBytesToKb(file['size']) < 2560){//2.5 Mb = 2560 Kb
+                /* OPTIONAL */
+                reader.onloadend = (file) => {
+                    // console.log("result", reader.result);
+                    this.form.photo = reader.result;
+                }
+                /* ===================================== */
+                reader.readAsDataURL(file);
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'You are uploading a large file',
+                })
             }
-            /* ===================================== */
-            reader.readAsDataURL(file);
         },
 
         

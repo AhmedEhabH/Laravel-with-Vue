@@ -2176,29 +2176,49 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(error);
       });
     },
-    getProfilePhoto: function getProfilePhoto() {// return (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
+    getProfilePhoto: function getProfilePhoto() {
+      // return (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
+      return "img/profile/" + this.form.photo;
     },
     updateProfileInfo: function updateProfileInfo() {
-      this.form.put('api/profile').then(function () {})["catch"](function () {});
+      var _this2 = this;
+
+      this.$Progress.start();
+      this.form.put('api/profile').then(function () {})["catch"](function () {
+        _this2.$Progress.fail();
+      });
+      this.$Progress.finish();
+    },
+    convetBytesToKb: function convetBytesToKb(size) {
+      return size / 1024;
     },
     updateProfilePhoto: function updateProfilePhoto(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       // console.log("uploading");
       // console.log(e);
       var file = e.target.files[0];
       var reader = new FileReader(); // console.log(file);
 
-      /* OPTIONAL */
+      if (this.convetBytesToKb(file['size']) < 2560) {
+        //2.5 Mb = 2560 Kb
 
-      reader.onloadend = function (file) {
-        // console.log("result", reader.result);
-        _this2.form.photo = reader.result;
-      };
-      /* ===================================== */
+        /* OPTIONAL */
+        reader.onloadend = function (file) {
+          // console.log("result", reader.result);
+          _this3.form.photo = reader.result;
+        };
+        /* ===================================== */
 
 
-      reader.readAsDataURL(file);
+        reader.readAsDataURL(file);
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'You are uploading a large file'
+        });
+      }
     }
   },
   mounted: function mounted() {// console.log('Component mounted.')
