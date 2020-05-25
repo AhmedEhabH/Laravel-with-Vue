@@ -131,7 +131,7 @@ class UserController extends Controller
         $this->validate($request, [
             'name'      =>  'required|string|max:191',
             'email'     =>  'required|string|email|max:191|unique:users,email,'.$user->id,
-            'password'  =>  'sometimes|min:6',
+            'password' => 'sometimes|required|string|min:8',
         ]);
 
         if($request->photo != $user->photo){
@@ -141,6 +141,10 @@ class UserController extends Controller
             // $user->photo = $name;
             $request->merge(['photo' => $name]);
         }
+        if(!empty($request->password)){
+            $request->merge(['password' => Hash::make($request['password'])]);
+        }
+
         $user->update($request->all());
         return [
             'message'   =>"SUCCESS",

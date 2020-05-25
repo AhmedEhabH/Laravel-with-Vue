@@ -2144,12 +2144,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -65049,7 +65043,7 @@ var render = function() {
                           staticClass: "col-sm-12 control-label",
                           attrs: { for: "password" }
                         },
-                        [_vm._v("Passport (leave empty if not changing)")]
+                        [_vm._v("Password (leave empty if not changing)")]
                       ),
                       _vm._v(" "),
                       _c(
@@ -65072,7 +65066,7 @@ var render = function() {
                             attrs: {
                               type: "password",
                               id: "password",
-                              placeholder: "Passport"
+                              placeholder: "Password"
                             },
                             domProps: { value: _vm.form.password },
                             on: {
