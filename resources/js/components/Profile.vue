@@ -146,7 +146,10 @@ export default {
             .then(({ data }) => (this.form.fill(data)))
             .catch(({ error }) => (console.log(error)));
         },
+
         getProfilePhoto(){
+            // Fire.$emit('loadUser');
+            if(this.form.photo == "profile.png") return "img/"+this.form.photo;
             // return (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
             return "img/profile/"+ this.form.photo;
         },
@@ -155,7 +158,7 @@ export default {
             this.$Progress.start();
             this.form.put('api/profile')
             .then(()=>{
-
+                Fire.$emit('loadUser');
             })
             .catch(()=>{
                 this.$Progress.fail();
@@ -202,6 +205,10 @@ export default {
 
     created(){
         this.loadUserData();
+
+        Fire.$on('loadUser', ()=>{
+            this.loadUserData();
+        })
     }
 };
 </script>

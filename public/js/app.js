@@ -2171,14 +2171,18 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getProfilePhoto: function getProfilePhoto() {
-      // return (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
+      // Fire.$emit('loadUser');
+      if (this.form.photo == "profile.png") return "img/" + this.form.photo; // return (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
+
       return "img/profile/" + this.form.photo;
     },
     updateProfileInfo: function updateProfileInfo() {
       var _this2 = this;
 
       this.$Progress.start();
-      this.form.put('api/profile').then(function () {})["catch"](function () {
+      this.form.put('api/profile').then(function () {
+        Fire.$emit('loadUser');
+      })["catch"](function () {
         _this2.$Progress.fail();
       });
       this.$Progress.finish();
@@ -2218,7 +2222,12 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {// console.log('Component mounted.')
   },
   created: function created() {
+    var _this4 = this;
+
     this.loadUserData();
+    Fire.$on('loadUser', function () {
+      _this4.loadUserData();
+    });
   }
 });
 
