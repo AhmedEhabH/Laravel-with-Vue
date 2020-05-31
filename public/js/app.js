@@ -2171,10 +2171,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getProfilePhoto: function getProfilePhoto() {
-      // Fire.$emit('loadUser');
-      if (this.form.photo == "profile.png") return "img/" + this.form.photo; // return (this.form.photo.length > 200) ? this.form.photo : "img/profile/"+ this.form.photo ;
-
-      return "img/profile/" + this.form.photo;
+      if (this.form.photo == "") return "img/" + "profile.png";
+      var photo = this.form.photo != "" && this.form.photo.length > 150 ? this.form.photo : "img/profile/" + this.form.photo;
+      return photo;
     },
     updateProfileInfo: function updateProfileInfo() {
       var _this2 = this;
