@@ -29,25 +29,25 @@ Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
 
 let routes = [
-    { path: '/dashboard', component: require('./components/Dashboard.vue').default},
+    { path: '/dashboard', component: require('./components/Dashboard.vue').default },
     { path: '/developer', component: require('./components/Developer.vue').default },
     { path: '/profile', component: require('./components/Profile.vue').default },
     { path: '/users', component: require('./components/Users.vue').default },
 ]
-  
+
 const router = new VueRouter({
-    mode:"history",
+    mode: "history",
     routes // short for `routes: routes`
 });
 
 // Filter
-Vue.filter('upperFirstLetter', function(text){
-    if(!text) return;
+Vue.filter('upperFirstLetter', function (text) {
+    if (!text) return;
     text = text.toString();
     return text.charAt(0).toUpperCase() + text.slice(1);
 });
 
-Vue.filter('myDate', function(date){
+Vue.filter('myDate', function (date) {
     return moment(date).format('MMMM Do YYYY, h:mm:ss a');
 })
 
@@ -65,7 +65,7 @@ const options = {
     location: 'top',
     inverse: false
 }
-  
+
 Vue.use(VueProgressBar, options);
 
 // Sweet alert 2
@@ -81,7 +81,7 @@ const Toast = Swal.mixin({
         toast.addEventListener('mouseleave', Swal.resumeTimer)
     }
 })
-  
+
 window.Toast = Toast;
 
 // event Fire
@@ -98,7 +98,10 @@ window.Fire = new Vue();
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+// Vue.component(
+//     'example-component',
+//     require('./components/ExampleComponent.vue').default
+// );
 
 // Passport
 Vue.component(
@@ -114,7 +117,12 @@ Vue.component(
 Vue.component(
     'passport-personal-access-tokens',
     require('./components/passport/PersonalAccessTokens.vue').default
-); 
+);
+
+Vue.component(
+    'not-found',
+    require('./components/NotFound.vue').default
+);
 
 
 /**
