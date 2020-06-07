@@ -7,9 +7,15 @@ export default class Gate{
         return this.user.type == "admin";
     }
 
+    isAuthor(){
+        return this.user.type == "author";
+    }
+
     isUser(){
         return this.user.type == "user";
     }
 
-
+    isAdminOrAuthor(){
+        return this.user.type == "admin" || this.user.type == "author";
+    }
 }
