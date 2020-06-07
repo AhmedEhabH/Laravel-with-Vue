@@ -120,8 +120,8 @@ Vue.component(
 );
 
 Vue.component(
-    'not-found',
-    require('./components/NotFound.vue').default
+    'pagination',
+    require('laravel-vue-pagination')
 );
 
 
