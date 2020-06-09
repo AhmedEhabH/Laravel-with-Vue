@@ -1,3 +1,22 @@
+# To run the project
+* clone the project 
+    >`git clone https://github.com/AhmedEhabH/Laravel-with-Vue.git` 
+* > `cd Laravel-with-Vue`
+* run 
+    > `composer install`
+* run 
+    > `npm install` or `yarn install`
+* dublicate **.env.example** then rename it **.env**
+    * modify **.env** file 
+        * add your database name
+* run 
+    > `php artisan key:generate` 
+* run 
+    > `php artisan db:seed`
+* run 
+    > `php artisan serve`
+# 
+
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 <p align="center">
