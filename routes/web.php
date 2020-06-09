@@ -21,5 +21,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::get('invoice', function () {
+    return view('invoice');
+});
+
 // if write any path it will back to index
 Route::get('{path}', "HomeController@index")->where('path', '([A-z\d-\/_.]+)');
