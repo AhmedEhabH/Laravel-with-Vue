@@ -85853,7 +85853,10 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   methods: {
     searchIt: _.debounce(function () {
       Fire.$emit("searching");
-    }, 1000)
+    }, 1000),
+    printPDF: function printPDF() {
+      window.print();
+    }
   }
 });
 

@@ -141,6 +141,10 @@ const app = new Vue({
     methods: {
         searchIt: _.debounce(() => {
             Fire.$emit("searching");
-        }, 1000)
+        }, 1000),
+
+        printPDF(){
+            window.print();
+        }
     }
 });
