@@ -187,7 +187,6 @@ export default {
     methods: {
         getResults(page = 1) {
             axios.get("api/user?page=" + page).then(response => {
-              
                 this.users = response.data;
             });
         },
@@ -250,9 +249,10 @@ export default {
         loadUsers() {
             // this.$gate.isAdmin() || this.$gate.isAuthor()
             if (this.$gate.isAdminOrAuthor()) {
-                axios
-                    .get("api/user")
-                    .then(({ data }) => (this.users = data));
+                axios.get("api/user").then((data) => {
+                    // console.log(data.data);
+                    this.users = data.data;
+                });
             }
         },
         deleteUser(id) {
@@ -289,6 +289,20 @@ export default {
     },
 
     created() {
+        // Listen to root
+        Fire.$on("searching", () => {
+            let query = this.$parent.search;
+            // console.log(query);
+            axios.get('api/findUser?q=' + query)
+                .then((data) => {
+                    // console.log(data.data);
+                    this.users = data.data;
+                })
+                .catch((err) => {
+                    console.error(err);
+                });
+        });
+
         this.loadUsers();
         // setInterval(this.loadUsers, 5000);
         Fire.$on("loadUsers", () => {

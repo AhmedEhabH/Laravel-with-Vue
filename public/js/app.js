@@ -3588,9 +3588,9 @@ __webpack_require__.r(__webpack_exports__);
 
       // this.$gate.isAdmin() || this.$gate.isAuthor()
       if (this.$gate.isAdminOrAuthor()) {
-        axios.get("api/user").then(function (_ref3) {
-          var data = _ref3.data;
-          return _this4.users = data;
+        axios.get("api/user").then(function (data) {
+          // console.log(data.data);
+          _this4.users = data.data;
         });
       }
     },
@@ -3622,6 +3622,17 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this6 = this;
 
+    // Listen to root
+    Fire.$on("searching", function () {
+      var query = _this6.$parent.search; // console.log(query);
+
+      axios.get('api/findUser?q=' + query).then(function (data) {
+        // console.log(data.data);
+        _this6.users = data.data;
+      })["catch"](function (err) {
+        console.error(err);
+      });
+    });
     this.loadUsers(); // setInterval(this.loadUsers, 5000);
 
     Fire.$on("loadUsers", function () {
@@ -85835,7 +85846,15 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('pagination', __webpack_req
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
-  router: router
+  router: router,
+  data: {
+    search: ""
+  },
+  methods: {
+    searchit: function searchit() {
+      Fire.$emit("searching");
+    }
+  }
 });
 
 /***/ }),
